@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io("https://bingo-app-ng1s.onrender.com", {
-  transports: ["websocket"],
-});
+const socket = io(
+  process.env.NODE_ENV === "production"
+    ? "https://bingo-app-ng1s.onrender.com" // 👈 your Render backend
+    : "http://localhost:4000",              // 👈 for local dev
+  { transports: ["websocket"] }
+);
 
 export default function App() {
   const [roomCode, setRoomCode] = useState("");
